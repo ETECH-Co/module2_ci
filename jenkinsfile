@@ -1,0 +1,11 @@
+
+Pipeline{
+	agent any 
+		stages{
+			stage1 ('git-clone') {
+				steps{
+					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-Jenkins', url: 'https://github.com/ETECH-Co/module2_ci.git']]])
+				}
+			}
+		} 
+}
