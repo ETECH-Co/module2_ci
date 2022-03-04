@@ -29,7 +29,7 @@ pipeline{
 					jacoco execPattern: 'target/jacoco.exec'
 				}
 			}
-			stage(Mutation Test - PIT){
+			stage(Mutation Test PIT){
 				steps{
 					sh 'mvn org.pitest:pitest-maven:mutationCoverage'
 				}
