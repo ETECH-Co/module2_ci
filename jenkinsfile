@@ -8,9 +8,14 @@ pipeline{
 					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-Jenkins', url: 'https://github.com/ETECH-Co/module2_ci.git']]])
 				}
 			}
-			stage('codebuild') {
+			stage('Hello-Etech'){
 				steps{
-					sh 'mvn clean package'	
+				sh 'git version'
+				}
+			}
+			stage('codebuild'){
+				steps{
+				sh 'mvn clean package -DskipTests=true'
 				}
 			}
 		} 
