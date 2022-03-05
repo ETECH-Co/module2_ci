@@ -15,6 +15,7 @@ pipeline{
 			stage('codebuild'){
 				steps{
 				sh 'mvn clean package -DskipTests=true'
+				sh 'mvn -v'
 				}
 			}
 			stage('Unit Tests - JUnit and JaCoCo'){
