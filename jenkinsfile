@@ -35,7 +35,7 @@ pipeline{
 					sh 'mvn clean verify sonar:sonar \
  					-Dsonar.projectKey=Devsecops-app \
   					-Dsonar.host.url=http://ajaam-tech.eastus.cloudapp.azure.com:9000 \
-  					-Dsonar.login=1134370e96524a3d0dfa2c1b222b32b555c1a336'
+  					-Dsonar.login=14e42642df690102d1dbc9a26005e6c1c22cba04'
 				}
 			}	
 		} 
