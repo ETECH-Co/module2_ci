@@ -5,7 +5,8 @@ pipeline{
 		stages{
 			stage('git-clone') {
 				steps{
-					checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-Jenkins', url: 'https://github.com/Arise-Atongwe/module2_ci.git']]])				}
+					checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-Jenkins', url: 'https://github.com/Arise-Atongwe/module2_ci.git']]])
+				}
 			}
 			stage('Hello-Etech'){
 				steps{
@@ -15,12 +16,12 @@ pipeline{
 			stage('codebuild'){
 				steps{
 				sh 'mvn clean package -DskipTests=true'
-				sh 'mvn -v'
 				}
 			}
 			stage('Unit Tests - JUnit and JaCoCo'){
 				steps{
 					sh 'mvn test'
+					sh 'mvn -v'
 				}
 				post{
 					always{
@@ -29,15 +30,13 @@ pipeline{
 					}
 				}
 			}
-			stage('Mutation Test - PIT'){
-				steps{
-					sh 'mvn org.pitest:pitest-maven:mutationCoverage'
+				stage('CodeQuality - SAST'){
+					steps{
+					sh 'mvn clean verify sonar:sonar \
+ 					-Dsonar.projectKey=Devsecops-app \
+  					-Dsonar.host.url=http://ajaam-tech.eastus.cloudapp.azure.com:9000 \
+  					-Dsonar.login=14e42642df690102d1dbc9a26005e6c1c22cba04'
 				}
-				post{
-					always{
-						pitmutation mutationStatsFile:'**/target/pit-reports/**/mutations.xml'
-					}
-				}
-			}
+			}	
 		} 
 }
